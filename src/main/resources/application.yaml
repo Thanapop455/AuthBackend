@@ -1,0 +1,34 @@
+server:
+  port: 8081
+
+spring:
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/newbackend
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+app:
+  token:
+    secret: m#MySecret
+    issuer: BackenService
+    access-token-ttl-seconds: 3600
+#  frontend:
+#    activate-url: ${FRONTEND_ACTIVATE_URL:http://localhost:5173/activate}
+#  email:
+#    from: ${MAIL_FROM:${MAIL_USERNAME}}
