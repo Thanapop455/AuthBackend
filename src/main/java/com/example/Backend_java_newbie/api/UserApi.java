@@ -6,7 +6,6 @@ import com.example.Backend_java_newbie.domain.dto.user.req.UserRegisterReq;
 import com.example.Backend_java_newbie.domain.dto.user.res.TokenRes;
 import com.example.Backend_java_newbie.domain.dto.user.res.UserRegisterRes;
 import com.example.Backend_java_newbie.exception.BaseException;
-import com.example.Backend_java_newbie.exception.UserException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
@@ -28,7 +27,7 @@ public class UserApi {
 
         ResponseCookie cookie = ResponseCookie.from("accessToken", tokenRes.getAccessToken())
                 .httpOnly(true)
-                .secure(false) // true เมื่อขึ้น https
+                .secure(true) // true เมื่อขึ้น https
                 .path("/")
                 .sameSite("Lax")
                 .maxAge(tokenRes.getExpiresIn())
