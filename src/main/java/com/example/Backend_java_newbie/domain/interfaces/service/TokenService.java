@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class TokenService {
@@ -33,6 +34,7 @@ public class TokenService {
 
         return JWT.create()
                 .withIssuer(issuer)
+                .withJWTId(UUID.randomUUID().toString())
                 .withClaim("principal", user.getId())
                 .withClaim("role", "ROLE_USER")
                 .withIssuedAt(Date.from(now))

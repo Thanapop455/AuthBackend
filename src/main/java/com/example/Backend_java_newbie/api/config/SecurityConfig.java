@@ -39,11 +39,13 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/actuator/**","/register", "/login", "/auth/verify").permitAll()
+                        .requestMatchers("/actuator/**","/register", "/login", "/logout","/auth/verify","/password/reset", "/password/set").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout(logout -> logout.disable())
                 .httpBasic(Customizer.withDefaults());
+
 
         return http.build();
     }

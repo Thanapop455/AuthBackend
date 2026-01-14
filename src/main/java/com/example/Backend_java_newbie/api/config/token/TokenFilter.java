@@ -1,6 +1,7 @@
 package com.example.Backend_java_newbie.api.config.token;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.Backend_java_newbie.application.service.TokenBlacklistService;
 import com.example.Backend_java_newbie.domain.interfaces.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,9 +23,11 @@ public class TokenFilter extends OncePerRequestFilter {
 
     private static final String COOKIE_NAME = "accessToken";
     private final TokenService tokenService;
+    private final TokenBlacklistService blacklistService;
 
-    public TokenFilter(TokenService tokenService) {
+    public TokenFilter(TokenService tokenService, TokenBlacklistService blacklistService) {
         this.tokenService = tokenService;
+        this.blacklistService = blacklistService;
     }
 
     @Override
@@ -47,6 +50,12 @@ public class TokenFilter extends OncePerRequestFilter {
 
         DecodedJWT decoded = tokenService.verify(token);
         if (decoded == null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String jti = decoded.getId();
+        if (!ObjectUtils.isEmpty(jti) && blacklistService.isBlacklisted(jti)) {
             filterChain.doFilter(request, response);
             return;
         }

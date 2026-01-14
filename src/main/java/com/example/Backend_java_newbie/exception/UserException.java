@@ -55,4 +55,17 @@ public class UserException extends BaseException {
     public static UserException unauthorized() {
         return new UserException("unauthorized");
     }
+
+    //PASSWORD
+    public static UserException setPasswordTokenNull() {
+        return new UserException("set.password.token.null");
+    }
+
+    public static UserException setPasswordTokenInvalid() {
+        return new UserException("set.password.token.invalid");
+    }
+
+    public static UserException setPasswordTokenExpired() {
+        return new UserException("set.password.token.expired");
+    }
 }

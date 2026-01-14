@@ -33,6 +33,11 @@ public class User extends BaseEntity{
     private boolean verified = false;
 
     @Column(length = 64)
+    private String setPasswordToken;
+
+    private Instant setPasswordTokenExpiresAt;
+
+    @Column(length = 64)
     private String verifyTokenHash;
 
     private Instant verifyTokenExpiresAt;
